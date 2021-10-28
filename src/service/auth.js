@@ -26,11 +26,11 @@ export const authService = {
 
   check: async (token) => {
     if (!token) throw new Error("Token이 없습니다.");
-    const query = "SELECT uid FROM `trading`.`user` WHERE token = ?;";
+    const query = "SELECT id FROM `trading`.`user` WHERE token = ?;";
     const values = [token];
     const [rows] = await (await connection).execute(query, values);
     if (rows.length === 0) throw new Error("Token이 일치 하지 않습니다.");
-    const { uid } = rows[0];
-    return uid;
+    const { id } = rows[0];
+    return id;
   },
 };

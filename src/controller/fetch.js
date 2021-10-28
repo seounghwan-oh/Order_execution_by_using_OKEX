@@ -8,8 +8,8 @@ const router = Router();
 router.post("/", async (req, res) => {
   try {
     const { token, base_time } = req.body;
-    const uid = await authService.check(token);
-    const rows = await fetchService.get(uid, base_time);
+    const id = await authService.check(token);
+    const rows = await fetchService.get(id, base_time);
     if (rows.length === 0) throw new Error("데이터가 없습니다.");
     const result = await fetch.get();
     const total = [];

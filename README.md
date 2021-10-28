@@ -16,8 +16,7 @@
 
 # 기술 스택
 
-node.js 기반 express 프레임워크를 사용
-AWS의 RDS(mysql)에 데이터를 수집 (테이블 2 : 회원등록정보, 주문체결정보) 
+node.js 기반 express 프레임워크를 사용, AWS의 RDS(mysql)에 데이터를 수집 (테이블 2개: 회원등록정보, 주문체결정보),
 Google Firebase SDK를 이용하여 회원을 관리
 
 ---

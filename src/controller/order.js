@@ -8,7 +8,7 @@ const router = Router();
 router.post("/", async (req, res) => {
   try {
     const { token, instrument_id, size, price, type1, type2 } = req.body;
-    const uid = await authService.check(token);
+    const id = await authService.check(token);
     const result = await order.get(instrument_id);
     let { asks, bids, timestamp } = result.data;
     let results;
@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
       throw new Error("체결조건에 부합하지 않습니다.");
     console.log(results);
     for (const result of results) {
-      await orderService.post(uid, instrument_id, result);
+      await orderService.post(id, instrument_id, result);
     }
     res.json(results);
   } catch (error) {
