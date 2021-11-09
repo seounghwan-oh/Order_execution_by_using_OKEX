@@ -1,36 +1,30 @@
-import { connection } from "../loader/mysql.js";
+import { User } from "../models/user.js";
 import { passwordHash, compareHash } from "../util/bcrypt.js";
+import { fireBase } from "../loader/firebase.js";
+import crypto from "crypto";
 
 export const authService = {
-  register: async (uid, email, password) => {
+  register: async (email, password) => {
+    const uid = await fireBase.register(email, password);
     const password_hashed = await passwordHash(password);
-    const query =
-      "INSERT INTO `trading`.`user` (`uid`, `email`, `password`) VALUES (?, ?, ?);";
-    const values = [uid, email, password_hashed];
-    await (await connection).execute(query, values);
+    const user = new User();
+    await user.createUser(uid, email, password_hashed);
   },
 
-  login: async (uid, email, password, token) => {
-    const query =
-      "SELECT password FROM `trading`.`user` WHERE uid = ? AND email = ?;";
-    const values = [uid, email];
-    const [rows] = await (await connection).execute(query, values);
-    const password_hashed = rows[0].password;
-    const result = await compareHash(password, password_hashed);
-    if (!result) throw new Error("비밀번호가 맞지 않습니다.");
-    const updateQuery = "UPDATE trading.user SET token = ? WHERE uid = ?";
-    const tokenValues = [token, uid];
-    await (await connection).execute(updateQuery, tokenValues);
-    return result;
+  login: async (email, password) => {
+    const uid = await fireBase.login(email, password);
+    const user = new User();
+    const password_hashed = await user.getPassword(uid, email);
+    await compareHash(password, password_hashed);
+    const token = crypto.randomBytes(64).toString("hex");
+    await user.setToken(token, uid);
+    return token;
   },
 
   check: async (token) => {
     if (!token) throw new Error("Token이 없습니다.");
-    const query = "SELECT id FROM `trading`.`user` WHERE token = ?;";
-    const values = [token];
-    const [rows] = await (await connection).execute(query, values);
-    if (rows.length === 0) throw new Error("Token이 일치 하지 않습니다.");
-    const { id } = rows[0];
+    const user = new User()
+    const id = await user.getId(token);
     return id;
   },
 };

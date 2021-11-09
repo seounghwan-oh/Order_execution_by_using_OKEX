@@ -8,5 +8,5 @@ export const passwordHash = async (password) => {
 
 export const compareHash = async (password, hash) => {
   const result = await bcrypt.compare(password, hash);
-  return result;
+  if (!result) throw new Error("비밀번호가 맞지 않습니다.");
 };

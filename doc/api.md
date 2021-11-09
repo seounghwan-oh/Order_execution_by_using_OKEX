@@ -2,14 +2,22 @@
 
 ```
 src
-├── controller: API 엔드 포인트 및 비즈니스 로직(MySQL 제외)
+├── controller: API 엔드 포인트 처리
 ├── loader: MySQL, Firebase 연결
-├── service: MySQL 비즈니스 로직
+├── models: Data Acess Layer, SQL database 처리
+├── service: Service Layer, controller request body data에 대한 비즈니스 로직 처리
 ├── util
 │   ├── api.js: 외부 API 연동(OKEX) 함수
 │   └── bcrypt.js: 비밀번호 해시 함수
 └── index.js: API 서버 엔트리 포인트
 ```
+
+## Pattern
+
+### N-tier Structure
+* 1-tier, Controller Layer: API 엔드 포인트 처리
+* 2-tier, Service Layer: 비즈니스 로직 처리
+* 3-tier, Data Access Layer: DB 접근 및 처리 
 
 # 역할 및 프로세스
 Server 주소: http://localhost:3001
@@ -133,7 +141,7 @@ Server 주소: http://localhost:3001
 |order_price   |Integer   |주문 가격|
 |order_size   |Integer   |주문 수량|
 |exec_price   |String   |체결 가격|
-|exec_order   |Integer   |체결 수량|
+|exec_size   |Integer   |체결 수량|
 |timestamp   |String   |체결 시간|
 
 #### Example
@@ -143,21 +151,21 @@ Server 주소: http://localhost:3001
         "order_price": 60000,
         "order_size": 10,
         "exec_price": "62279.2",
-        "exec_order": 2,
+        "exec_size": 2,
         "timestamp": "2021-10-28T06:56:24.330Z"
     },
     {
         "order_price": 60000,
         "order_size": 10,
         "exec_price": "62280.9",
-        "exec_order": 1,
+        "exec_size": 1,
         "timestamp": "2021-10-28T06:56:24.330Z"
     },
     {
         "order_price": 60000,
         "order_size": 10,
         "exec_price": "62281.3",
-        "exec_order": 1,
+        "exec_size": 1,
         "timestamp": "2021-10-28T06:56:24.330Z"
     },
     ...

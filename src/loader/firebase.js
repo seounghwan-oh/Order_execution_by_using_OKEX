@@ -28,7 +28,7 @@ class FireBase {
         email,
         password
       );
-      return result;
+      return result.user.uid;
     } catch (error) {
       if (error.code === "auth/email-already-in-use")
         throw new Error("등록된 이메일입니다.");
@@ -46,7 +46,7 @@ class FireBase {
         email,
         password
       );
-      return result;
+      return result.user.uid;
     } catch (error) {
       if (error.code === "auth/invalid-email")
         throw new Error("이메일 주소가 유효하지 않습니다.");
