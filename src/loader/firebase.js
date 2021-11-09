@@ -8,13 +8,13 @@ import {
 class FireBase {
   constructor() {
     const firebaseConfig = {
-      apiKey: "AIzaSyCTv0MbZyH_hYOjRRcWxUG6YjEHEwvDL_o",
-      authDomain: "assignment-511b2.firebaseapp.com",
-      projectId: "assignment-511b2",
-      storageBucket: "assignment-511b2.appspot.com",
-      messagingSenderId: "622426989289",
-      appId: "1:622426989289:web:40c51f3ccc466854370678",
-      measurementId: "G-HMNJJ19VHX",
+      apiKey: "AIzaSyDXZM73Ddu1UxBqa76y_G4p8ajFnmmoajQ",
+      authDomain: "okex-2b721.firebaseapp.com",
+      projectId: "okex-2b721",
+      storageBucket: "okex-2b721.appspot.com",
+      messagingSenderId: "418332901450",
+      appId: "1:418332901450:web:a57d81bf4d5621b53026b3",
+      measurementId: "G-D1XR556FYV"
     };
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
